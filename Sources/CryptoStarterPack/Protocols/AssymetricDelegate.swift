@@ -1,9 +1,9 @@
 import Foundation
 
 public protocol AsymmetricDelegate {
-    associatedtype PublicKey: BinaryEncodable
-    associatedtype PrivateKey: BinaryEncodable
-    associatedtype Signature: BinaryEncodable
+    associatedtype PublicKey: Stringable
+    associatedtype PrivateKey: Stringable
+    associatedtype Signature: Stringable
     
     static func sign<T: BinaryEncodable>(message: T, privateKey: PrivateKey) -> Signature?
     static func verify<T: BinaryEncodable>(message: T, publicKey: PublicKey, signature: Signature) -> Bool

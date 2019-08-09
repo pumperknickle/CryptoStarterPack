@@ -20,6 +20,21 @@ extension Data: BinaryEncodable {
     }
 }
 
+extension Data: Stringable {
+    public init?(stringValue: String) {
+        guard let data = Data(raw: stringValue.bools()) else { return nil }
+        self = data
+    }
+    
+    public func toString() -> String {
+        return toBoolArray().literal()
+    }
+    
+    public static func < (lhs: Data, rhs: Data) -> Bool {
+        return lhs.hashValue < rhs.hashValue
+    }
+}
+
 public extension Data {
     var hexString: String {
         return map { String(format: "%02x", $0) }
