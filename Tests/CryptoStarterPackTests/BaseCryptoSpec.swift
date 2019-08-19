@@ -9,7 +9,6 @@ final class BaseCryptoSpec: QuickSpec {
             it("hashes a message into a 256 bit output") {
                 expect(BaseCrypto.hash("The yellow fox crossed the road.".data(using: .utf8)!)).toNot(beNil())
                 expect(BaseCrypto.hash("The yellow fox crossed the road.".data(using: .utf8)!.toBoolArray())).toNot(beNil())
-
             }
         }
     }

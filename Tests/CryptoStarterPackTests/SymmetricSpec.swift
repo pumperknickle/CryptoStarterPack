@@ -8,8 +8,8 @@ final class SymmetricSpec: QuickSpec {
         describe("AES 256 bit CBC Mode") {
             it("encrypts and decrypts back into the same plaintext") {
                 let plainText = "hello world".data(using: .utf8)!
-                let key = arc4random64().bytes + arc4random64().bytes + arc4random64().bytes + arc4random64().bytes
-                let iv = arc4random64().bytes + arc4random64().bytes
+                let key = UInt64.random(in: 0..<UInt64.max).bytes + UInt64.random(in: 0..<UInt64.max).bytes + UInt64.random(in: 0..<UInt64.max).bytes + UInt64.random(in: 0..<UInt64.max).bytes
+                let iv = UInt64.random(in: 0..<UInt64.max).bytes + UInt64.random(in: 0..<UInt64.max).bytes
                 let cipherText = BaseSymmetric.encrypt(data: plainText, key: Data(key), iv: Data(iv))
                 expect(cipherText).toNot(beNil())
                 let decrypted = BaseSymmetric.decrypt(data: cipherText!, key: Data(key), iv: Data(iv))

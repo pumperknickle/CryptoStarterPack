@@ -10,7 +10,7 @@ final class BaseConversionsSpec: QuickSpec {
             expect(random!.hexString.hexStringToData!).to(equal(random!))
         }
         describe("uint256 to string conversions") {
-            let random = arc4random256()
+            let random = UInt256(Int.random(in: 0...Int.max))
             expect(UInt256(stringValue: random.literal()!)).to(equal(random))
         }
         describe("uint conversions") {
