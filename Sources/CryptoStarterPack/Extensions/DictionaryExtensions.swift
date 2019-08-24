@@ -32,12 +32,12 @@ public extension Dictionary where Value == [[String]] {
 }
 
 public extension Dictionary where Key: Stringable, Value: Stringable {
-    func toSortedKeys() -> [String] {
-        return sorted { $0.key < $1.key }.map { $0.key.toString() }
+    func toSortedKeys() -> [Key] {
+        return sorted { $0.key < $1.key }.map { $0.key }
     }
     
-    func toSortedValues() -> [String] {
-        return sorted { $0.key < $1.key }.map { $0.value.toString() }
+    func toSortedValues() -> [Value] {
+        return sorted { $0.key < $1.key }.map { $0.value }
     }
     
     static func combine(keys: [String], values: [String]) -> [Key: Value]? {
