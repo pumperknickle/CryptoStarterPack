@@ -1,5 +1,5 @@
 import Foundation
 
 public protocol CryptoDelegate {
-    static func hash(_ input: [Bool]) -> [Bool]?
+    static func hash<T: BinaryEncodable>(_ input: T) -> [Bool]?
 }
