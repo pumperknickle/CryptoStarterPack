@@ -14,9 +14,9 @@ final class AssymetricSpec: QuickSpec {
             }
             it("anything encrypted with public key, can be decrypted with public key") {
                 let plainText = "Hello World".data(using: .utf8)!
-                let cipherText = BaseAsymmetric.encrypt(data: plainText, publicKey: publicKey)
+                let cipherText = BaseAsymmetric.encrypt(message: "Hello World", publicKey: publicKey)
                 expect(cipherText).toNot(beNil())
-                expect(BaseAsymmetric.decrypt(data: cipherText!, privateKey: privateKey)).to(equal(plainText))
+                expect(BaseAsymmetric.decrypt(ciphertext: cipherText!, privateKey: privateKey)).to(equal(plainText))
             }
         }
     }
