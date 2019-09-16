@@ -8,6 +8,6 @@ public protocol AsymmetricDelegate {
     static func sign<T: BinaryEncodable>(message: T, privateKey: PrivateKey) -> Signature?
     static func verify<T: BinaryEncodable>(message: T, publicKey: PublicKey, signature: Signature) -> Bool
     
-    static func encrypt(data: Data, publicKey: PublicKey) -> Data?
-    static func decrypt(data: Data, privateKey: PrivateKey) -> Data?
+    static func encrypt<T: BinaryEncodable>(message: T, publicKey: PublicKey) -> [Bool]?
+    static func decrypt<T: BinaryEncodable>(ciphertext: [Bool], privateKey: PrivateKey) -> T?
 }

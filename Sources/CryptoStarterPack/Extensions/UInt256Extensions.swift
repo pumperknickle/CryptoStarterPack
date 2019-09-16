@@ -1,5 +1,11 @@
 import Foundation
 
+extension UInt256: Randomizable {
+    public static func random() -> UInt256 {
+        return UInt256([UInt64.random(in: 0...UInt64.max), UInt64.random(in: 0...UInt64.max), UInt64.random(in: 0...UInt64.max), UInt64.random(in: 0...UInt64.max)])
+    }
+}
+
 extension UInt256: BinaryEncodable {
     public func toBoolArray() -> [Bool] {
         return parts.toByteArray().toBoolArray()
