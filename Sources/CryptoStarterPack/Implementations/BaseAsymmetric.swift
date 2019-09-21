@@ -6,25 +6,25 @@ public struct BaseAsymmetric: AsymmetricDelegate {
     public typealias PrivateKey = String
     public typealias Signature = Data
     
-    public static func sign<T: BinaryEncodable>(message: T, privateKey: String) -> Data? {
-        return try? RSA.SHA256.sign(message.toBoolArray().literal(), key: .private(pem: privateKey))
+    public static func sign(message: [Bool], privateKey: String) -> Data? {
+        return try? RSA.SHA256.sign(message.literal(), key: .private(pem: privateKey))
     }
     
-    public static func verify<T: BinaryEncodable>(message: T, publicKey: String, signature: Data) -> Bool {
-        guard let result = try? RSA.SHA256.verify(signature, signs: message.toBoolArray().literal(), key: .public(pem: publicKey)) else { return false }
+    public static func verify(message: [Bool], publicKey: String, signature: Data) -> Bool {
+        guard let result = try? RSA.SHA256.verify(signature, signs: message.literal(), key: .public(pem: publicKey)) else { return false }
         return result
     }
     
-    public static func encrypt<T: BinaryEncodable>(message: T, publicKey: String) -> [Bool]? {
-        guard let data = message.toBoolArray().literal().data(using: .utf8) else { return nil }
+    public static func encrypt(plainText: [Bool], publicKey: String) -> [Bool]? {
+        guard let data = plainText.literal().data(using: .utf8) else { return nil }
         guard let ciphertext = try? RSA.encrypt(data, key: .public(pem: publicKey)) else { return nil }
         return ciphertext.toBoolArray()
     }
     
-    public static func decrypt<T: BinaryEncodable>(ciphertext: [Bool], privateKey: String) -> T? {
-        guard let data = Data(raw: ciphertext) else { return nil }
+    public static func decrypt(cipherText: [Bool], privateKey: String) -> [Bool]? {
+        guard let data = Data(raw: cipherText) else { return nil }
         guard let plaintext = try? RSA.decrypt(data, key: .private(pem: privateKey)) else { return nil }
         guard let stringLit = String(bytes: plaintext, encoding: .utf8) else { return nil }
-        return T(raw: stringLit.bools())
+        return stringLit.bools()
     }
 }

@@ -3,6 +3,6 @@ import Crypto
 
 public protocol SymmetricDelegate {
     associatedtype Key: Stringable, Randomizable
-    static func encrypt<T: BinaryEncodable>(plaintext: T, key: Key) -> [Bool]?
-    static func decrypt<T: BinaryEncodable>(ciphertext: [Bool], key: Key) -> T?
+    static func encrypt(plainText: [Bool], key: Key) -> [Bool]?
+    static func decrypt(cipherText: [Bool], key: Key) -> [Bool]?
 }
