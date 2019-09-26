@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "Bedrock",
+        "repositoryURL": "https://github.com/pumperknickle/Bedrock.git",
+        "state": {
+          "branch": null,
+          "revision": "c2530fe329f223ee2031643afe741c28f9e3f6e6",
+          "version": "0.0.1"
+        }
+      },
+      {
         "package": "Core",
         "repositoryURL": "https://github.com/vapor/core.git",
         "state": {

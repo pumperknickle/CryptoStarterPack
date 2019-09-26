@@ -1,4 +1,5 @@
 import Foundation
+import Bedrock
 
 public protocol AsymmetricDelegate {
     associatedtype PublicKey: Stringable

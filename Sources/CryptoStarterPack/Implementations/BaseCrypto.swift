@@ -1,4 +1,5 @@
 import Crypto
+import Bedrock
 import Foundation
 
 public struct BaseCrypto: CryptoDelegate {

@@ -1,4 +1,5 @@
 import Foundation
+import Bedrock
 import Crypto
 
 public struct BaseAsymmetric: AsymmetricDelegate {

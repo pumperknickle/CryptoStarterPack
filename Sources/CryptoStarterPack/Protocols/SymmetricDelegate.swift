@@ -1,5 +1,6 @@
 import Foundation
 import Crypto
+import Bedrock
 
 public protocol SymmetricDelegate {
     associatedtype Key: Stringable, Randomizable

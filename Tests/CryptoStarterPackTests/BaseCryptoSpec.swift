@@ -1,6 +1,7 @@
 import Foundation
 import Nimble
 import Quick
+import Bedrock
 @testable import CryptoStarterPack
 
 final class BaseCryptoSpec: QuickSpec {
