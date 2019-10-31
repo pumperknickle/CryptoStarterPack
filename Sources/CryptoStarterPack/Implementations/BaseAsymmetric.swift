@@ -26,13 +26,3 @@ public struct BaseAsymmetric: AsymmetricDelegate {
 		return plaintext
     }
 }
-
-extension UInt256 {
-    public func serializeToData() -> Data {
-        return Data(parts.toByteArray())
-    }
-	
-	public init?(data: Data) {
-		self = UInt256(data.toUInt64Array())
-	}
-}
