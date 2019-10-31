@@ -9,6 +9,6 @@ public protocol AsymmetricDelegate {
     static func sign(message: [Bool], privateKey: PrivateKey) -> Signature?
     static func verify(message: [Bool], publicKey: PublicKey, signature: Signature) -> Bool
     
-    static func encrypt(plainText: [Bool], publicKey: PublicKey) -> [Bool]?
-    static func decrypt(cipherText: [Bool], privateKey: PrivateKey) -> [Bool]?
+    static func encrypt(plainText: Data, publicKey: PublicKey) -> Data?
+    static func decrypt(cipherText: Data, privateKey: PrivateKey) -> Data?
 }

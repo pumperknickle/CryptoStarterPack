@@ -16,16 +16,23 @@ public struct BaseAsymmetric: AsymmetricDelegate {
         return result
     }
     
-    public static func encrypt(plainText: [Bool], publicKey: String) -> [Bool]? {
-        guard let data = plainText.literal().data(using: .utf8) else { return nil }
-        guard let ciphertext = try? RSA.encrypt(data, key: .public(pem: publicKey)) else { return nil }
-        return ciphertext.toBoolArray()
+    public static func encrypt(plainText: Data, publicKey: String) -> Data? {
+        guard let ciphertext = try? RSA.encrypt(plainText, key: .public(pem: publicKey)) else { return nil }
+        return ciphertext
     }
     
-    public static func decrypt(cipherText: [Bool], privateKey: String) -> [Bool]? {
-        guard let data = Data(raw: cipherText) else { return nil }
-        guard let plaintext = try? RSA.decrypt(data, key: .private(pem: privateKey)) else { return nil }
-        guard let stringLit = String(bytes: plaintext, encoding: .utf8) else { return nil }
-        return stringLit.bools()
+    public static func decrypt(cipherText: Data, privateKey: String) -> Data? {
+        guard let plaintext = try? RSA.decrypt(cipherText, key: .private(pem: privateKey)) else { return nil }
+		return plaintext
     }
+}
+
+extension UInt256 {
+    public func serializeToData() -> Data {
+        return Data(parts.toByteArray())
+    }
+	
+	public init?(data: Data) {
+		self = UInt256(data.toUInt64Array())
+	}
 }
