@@ -10,7 +10,7 @@ final class SymmetricSpec: QuickSpec {
             it("encrypts and decrypts back into the same plaintext") {
 				let plainText = "hello world, this is a test to test the encryption and decryption of symmetric key cryptography algorithms".toBoolArray()
                 let key = UInt256.random()
-				let iv = Data.random()
+				let iv = UInt128.random()
                 let cipherText = BaseSymmetric.encrypt(plainText: plainText, key: key, iv: iv)
                 expect(cipherText).toNot(beNil())
                 let decrypted = BaseSymmetric.decrypt(cipherText: cipherText!, key: key, iv: iv)

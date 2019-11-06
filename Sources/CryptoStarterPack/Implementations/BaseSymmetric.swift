@@ -4,25 +4,19 @@ import Crypto
 
 public struct BaseSymmetric: SymmetricDelegate {
     public typealias Key = UInt256
-	public typealias IV = Data
+	public typealias IV = UInt128
 	
-	private static let defaultIV = UInt64.min.bytes + UInt64.min.bytes
+	private static let defaultIV = UInt128(UInt64.min + UInt64.min)
     
 	public static func encrypt(plainText: [Bool], key: Key, iv: IV? = nil) -> [Bool]? {
         guard let plaintextData = plainText.literal().data(using: .utf8) else { return nil }
-		guard let iv = iv else {
-			return try? AES256CBC.encrypt(plaintextData, key: key.parts[0].bytes + key.parts[1].bytes + key.parts[2].bytes + key.parts[3].bytes, iv: defaultIV).toBoolArray()
-		}
-		let cutIV = Array(iv.prefix(16))
-		if cutIV.count < 16 { return nil }
-		return try? AES256CBC.encrypt(plaintextData, key: key.parts[0].bytes + key.parts[1].bytes + key.parts[2].bytes + key.parts[3].bytes, iv: cutIV).toBoolArray()
+		return try? AES256CBC.encrypt(plaintextData, key: key.parts[0].bytes + key.parts[1].bytes + key.parts[2].bytes + key.parts[3].bytes, iv: iv != nil ? iv!.toData() : defaultIV.toData()).toBoolArray()
     }
     
 	public static func decrypt(cipherText: [Bool], key: Key, iv: IV? = nil) -> [Bool]? {
         guard let ciphertextData = Data(raw: cipherText) else { return nil }
-		guard let plaintextData = try? AES256CBC.decrypt(ciphertextData, key: key.parts[0].bytes + key.parts[1].bytes + key.parts[2].bytes + key.parts[3].bytes, iv: iv?.prefix(16) ?? defaultIV) else { return nil }
-        guard let plaintextString = String(bytes: plaintextData, encoding: .utf8) else { return nil }
-        return plaintextString.bools()
+		guard let plaintextData = try? AES256CBC.decrypt(ciphertextData, key: key.parts[0].bytes + key.parts[1].bytes + key.parts[2].bytes + key.parts[3].bytes, iv: iv?.toData() ?? defaultIV.toData()) else { return nil }
+		return String(bytes: plaintextData, encoding: .utf8)?.bools()
     }
 }
 
