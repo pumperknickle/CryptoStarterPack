@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/pumperknickle/Bedrock.git",
         "state": {
           "branch": null,
-          "revision": "6214d09d54ffe31d54b1a329344725f985f9923f",
-          "version": "0.1.2"
+          "revision": "c7ab73980e2765fd8ba43ac2afb23e2a2a6c37a4",
+          "version": "0.1.3"
         }
       },
       {
@@ -26,6 +26,15 @@
           "branch": null,
           "revision": "df8eb7d8ae51787b3a0628aa3975e67666da936c",
           "version": "3.3.3"
+        }
+      },
+      {
+        "package": "CryptoSwift",
+        "repositoryURL": "https://github.com/krzyzanowskim/CryptoSwift.git",
+        "state": {
+          "branch": null,
+          "revision": "79ac632c85df81f2618dd838fc3869633e163370",
+          "version": "1.2.0"
         }
       },
       {

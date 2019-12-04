@@ -1,6 +1,7 @@
 import Foundation
 import Bedrock
 import Crypto
+import CryptoSwift
 
 public struct BaseSymmetric: SymmetricDelegate {
     public typealias Key = UInt256
@@ -9,14 +10,13 @@ public struct BaseSymmetric: SymmetricDelegate {
 	private static let defaultIV = UInt128(UInt64.min + UInt64.min)
     
 	public static func encrypt(plainText: [Bool], key: Key, iv: IV? = nil) -> [Bool]? {
-        guard let plaintextData = plainText.literal().data(using: .utf8) else { return nil }
-		return try? AES256CBC.encrypt(plaintextData, key: key.parts[0].bytes + key.parts[1].bytes + key.parts[2].bytes + key.parts[3].bytes, iv: iv != nil ? iv!.toData() : defaultIV.toData()).toBoolArray()
+        return try! Data.convert(plainText).encrypt(cipher: AES(key: key.toData().bytes, blockMode: CBC(iv: iv != nil ? iv!.toData().bytes : defaultIV.toData().bytes))).toBoolArray()
     }
     
 	public static func decrypt(cipherText: [Bool], key: Key, iv: IV? = nil) -> [Bool]? {
         guard let ciphertextData = Data(raw: cipherText) else { return nil }
-		guard let plaintextData = try? AES256CBC.decrypt(ciphertextData, key: key.parts[0].bytes + key.parts[1].bytes + key.parts[2].bytes + key.parts[3].bytes, iv: iv?.toData() ?? defaultIV.toData()) else { return nil }
-		return String(bytes: plaintextData, encoding: .utf8)?.bools()
+        guard let plaintextData = try? AES(key: key.toData().bytes, blockMode: CBC(iv: iv != nil ? iv!.toData().bytes : defaultIV.toData().bytes)).decrypt(ciphertextData.bytes) else { return nil }
+        return Data(plaintextData).convert()
     }
 }
 
