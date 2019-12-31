@@ -9,6 +9,15 @@ public struct BaseSymmetric: SymmetricDelegate {
 	
 	private static let defaultIV = UInt128(UInt64.min + UInt64.min)
     
+    public static func encrypt<T>(plaintext: T, key: UInt256, iv: UInt128?) -> Data? where T : DataEncodable {
+        return try! plaintext.toData().encrypt(cipher: AES(key: key.toData().bytes, blockMode: CBC(iv: iv != nil ? iv!.toData().bytes : defaultIV.toData().bytes)))
+    }
+    
+    public static func decrypt<T>(cipherText: T, key: UInt256, iv: UInt128?) -> Data? where T : DataEncodable {
+        guard let plaintext = try? AES(key: key.toData().bytes, blockMode: CBC(iv: iv != nil ? iv!.toData().bytes : defaultIV.toData().bytes)).decrypt(cipherText.toData().bytes) else { return nil }
+        return Data(plaintext)
+    }
+    
 	public static func encrypt(plainText: [Bool], key: Key, iv: IV? = nil) -> [Bool]? {
         return try! Data.convert(plainText).encrypt(cipher: AES(key: key.toData().bytes, blockMode: CBC(iv: iv != nil ? iv!.toData().bytes : defaultIV.toData().bytes))).toBoolArray()
     }
