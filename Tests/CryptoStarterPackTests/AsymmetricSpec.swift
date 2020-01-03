@@ -8,16 +8,16 @@ final class AssymetricSpec: QuickSpec {
     override func spec() {
         describe("The Assymetric RSA cryptosystem") {
             it("signs a message using a private key, and verifies with the public key") {
-				let plainText = "Hello World".toBoolArray()
-                let signature = BaseAsymmetric.sign(message: plainText, privateKey: privateKey.toBoolArray())
+                let plainText = "Hello World".convertToData()
+                let signature = BaseAsymmetric.sign(message: plainText, privateKey: privateKey.convertToData())
                 expect(signature).toNot(beNil())
-                expect(BaseAsymmetric.verify(message: plainText, publicKey: publicKey.toBoolArray(), signature: signature!)).to(beTrue())
+                expect(BaseAsymmetric.verify(message: plainText, publicKey: publicKey.toData(), signature: signature!)).to(beTrue())
             }
             it("anything encrypted with public key, can be decrypted with private key") {
 				let plainText = UInt256.random()
-                let cipherText = BaseAsymmetric.encrypt(plainText: plainText, publicKey: publicKey.toBoolArray())
+                let cipherText = BaseAsymmetric.encrypt(plainText: plainText, publicKey: publicKey.toData())
                 expect(cipherText).toNot(beNil())
-                expect(BaseAsymmetric.decrypt(cipherText: cipherText!, privateKey: privateKey.toBoolArray())).to(equal(plainText))
+                expect(BaseAsymmetric.decrypt(cipherText: cipherText!, privateKey: privateKey.toData())).to(equal(plainText))
             }
         }
     }

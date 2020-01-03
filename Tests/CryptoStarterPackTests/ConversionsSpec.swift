@@ -18,11 +18,11 @@ final class BaseConversionsSpec: QuickSpec {
             let x256 = UInt256(123_121_112_315_982)
             it("should convert bytes to bits and back") {
                 let randomBytes = x256.parts.map { $0.bytes }.reduce([], +)
-                expect(randomBytes).to(equal(randomBytes.toBoolArray().toBytes()))
+                expect(randomBytes).to(equal(Data(randomBytes).toBoolArray().toBytes()))
             }
             it("should convert between byte array and uint64 array") {
                 let x64 = x256.parts
-                let bools = x64.map { $0.bytes.toBoolArray() }.reduce([], +)
+                let bools = x64.map { Data($0.bytes).toBoolArray() }.reduce([], +)
                 expect(x64).to(equal(bools.toBytes().toUInt64Array()))
             }
             it("should convert uint256 to bits and back") {
